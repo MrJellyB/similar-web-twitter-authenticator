@@ -6,19 +6,34 @@ admin.initializeApp({
 });
 
 module.exports = {
-    checkIfUserExists: async function(userEmail) {
-        let userData = await admin.auth().getUserByEmail(userEmail);
-        return (!!userData);
+    checkIfUserExists: function(userEmail, next, error) {
+        // let userData = await admin.auth().getUserByEmail(userEmail);
+        // return (!!userData);
+
+        admin.auth().getUserByEmail(userEmail)
+            .then(function(userRecord) {
+                next(true);
+            })
+            .catch(function(error) {
+                console.log(error);
+                if (error.code === "auth/user-not-found")
+                    next(false);
+                else
+                    error();
+            });
     },
-    addNewUser: async function(email, firstName, lastName, password) {
-        let createdUser = await admin.auth().createUser({
+    addNewUser: function({email, firstName, lastName, password}, next, error) {
+         admin.auth().createUser({
             email: email,
             displayName: firstName + ' ' + lastName,
             disabled: false,
             emailVerified: false,
             password: password
-        });
-
-        return createdUser;
+        }).then(next).catch(error);
+    },
+    getUserToken: function(userId, next, error) {
+        admin.auth().createCustomToken(userId)
+            .then(next)
+            .catch(error);
     }
 }
