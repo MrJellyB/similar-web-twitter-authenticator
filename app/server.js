@@ -2,8 +2,15 @@ var express = require('express');
 var http = require('http');
 var dotenv = require('dotenv');
 var cors = require('cors');
+var tokenValidation = require('./middlewares/tokenValidation');
+
+var corsOptions = {
+    allowedHeaders: ['Content-Type', 'Authorization', 'token'],
+    exposedHeaders: ['Content-Type', 'token']
+}
 
 var authRouter = require('./routes/auth.routes').router;
+var infoRouter = require('./routes/info.routes').router;
 
 dotenv.config();
 var app = express();
@@ -11,10 +18,11 @@ var app = express();
 // Basic Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cors());
+app.use(cors(corsOptions));
 
 // Routes
 app.use('/auth', authRouter);
+app.use('/info', tokenValidation(), infoRouter);
 
 var port = process.env.SERVICE_PORT || '8080';
 app.set('port', port);
