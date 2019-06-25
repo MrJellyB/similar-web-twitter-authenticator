@@ -7,10 +7,8 @@ const tokenValidation = function() {
         const token = bearertoken.substring('Bearer '.length, bearertoken.length);
 
         authenticator.signInWithToken(token, next, function(error) {
-            res.status(401).send("bla");
+            res.status(401).send(error.code);
         });
-
-        next();
     };
 }
 

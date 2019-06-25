@@ -2,11 +2,14 @@ var express = require('express');
 var http = require('http');
 var dotenv = require('dotenv');
 var cors = require('cors');
+
+// Custom Middlewares
 var tokenValidation = require('./middlewares/tokenValidation');
+var tokenHeaderInjection = require("./middlewares/tokenHeaderInjection");
 
 var corsOptions = {
     allowedHeaders: ['Content-Type', 'Authorization', 'token'],
-    exposedHeaders: ['Content-Type', 'token']
+    exposedHeaders: ['Content-Type', 'Authorization', 'token']
 }
 
 var authRouter = require('./routes/auth.routes').router;
@@ -23,6 +26,8 @@ app.use(cors(corsOptions));
 // Routes
 app.use('/auth', authRouter);
 app.use('/info', tokenValidation(), infoRouter);
+
+app.use(tokenHeaderInjection);
 
 var port = process.env.SERVICE_PORT || '8080';
 app.set('port', port);

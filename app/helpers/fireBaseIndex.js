@@ -46,8 +46,8 @@ module.exports = {
     },
     getUserToken: function(uid, next, error) {
         admin.auth().createCustomToken(uid)
-            .then(function(token) {
-                next({userToken: token, userId: uid});
+            .then(function(userToken) {
+                next({token: userToken, id: uid});
             })
             .catch(error);
     },
