@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const authenticator = require('../actions/authenticator');
+const tokenValidation = require('../middlewares/tokenValidation');
 
 router.post('/register', function(req, res, next){
     authenticator.register(req.body, function(user) {
@@ -11,6 +12,10 @@ router.post('/register', function(req, res, next){
         next();
     },
     next);
+});
+
+router.get('/logout',tokenValidation(), function(req, res, next) {
+    
 });
 
 exports.router = router;
