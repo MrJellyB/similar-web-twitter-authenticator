@@ -56,5 +56,8 @@ module.exports = {
     },
     tokenSignIn: function(token, next, error) {
         firebase.auth().signInWithCustomToken(token).catch(error);
+    },
+    tokenSignOut: function(next, error) {
+        firebase.auth().signOut().then(next).catch(error);
     }
 }

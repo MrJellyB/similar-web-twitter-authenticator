@@ -25,9 +25,8 @@ app.use(cors(corsOptions));
 
 // Routes
 app.use('/auth', authRouter);
-app.use('/info', tokenValidation(), infoRouter);
+app.use('/info', tokenValidation(), tokenHeaderInjection(), infoRouter);
 
-app.use(tokenHeaderInjection);
 
 var port = process.env.SERVICE_PORT || '8080';
 app.set('port', port);

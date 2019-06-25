@@ -32,3 +32,7 @@ exports.signInWithToken = function(token, success, error) {
 exports.getUserInfo = function(userId, success, error) {
     fireBaseIndex.getUserFromUid(userId, success, error);
 }
+
+exports.logOut = function(success, error) {
+    fireBaseIndex.tokenSignOut(success, error);
+}
