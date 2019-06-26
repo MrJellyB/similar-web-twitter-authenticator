@@ -1,5 +1,3 @@
-var authenticator = require('../actions/authenticator');
-
 const tokenHeaderInjection = function() {
     return function(req,res,next) {
         res.set('Authorization', req.headers['Authorization']);

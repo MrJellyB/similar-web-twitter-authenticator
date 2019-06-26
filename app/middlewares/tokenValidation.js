@@ -2,12 +2,15 @@ const authenticator = require('../actions/authenticator');
 
 const tokenValidation = function() {
     return function(req, res, next) {
-        let bearertoken = req.headers['Authorization'] || req.headers['token'];
-        
-        const token = bearertoken.substring('Bearer '.length, bearertoken.length);
+        let token = req.headers['Authorization'] || req.headers['token'];
 
-        authenticator.signInWithToken(token, next, function(error) {
+        authenticator.signInWithToken(token, function(data) {
+            console.log('success');
+
+            next();
+        }, function(error) {
             res.status(401).send(error.code);
+            next(error);
         });
     };
 }

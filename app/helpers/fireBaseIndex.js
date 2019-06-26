@@ -50,12 +50,20 @@ module.exports = {
                 next({token: userToken, id: uid});
             })
             .catch(error);
+        // firebase.auth().currentUser.getIdToken(true).then(
+        //     function(userToken) {
+        //         next({token: userToken, id: uid});
+        //     })
+        //     .catch(error);
     },
     getUserFromUid: function(userId, next, error) {
         admin.auth().getUser(userId).then(next).catch(error);
     },
+    passwordSignIn: function(email, password, next, error) {
+        firebase.auth().signInWithEmailAndPassword(email, password).then(next).catch(error);
+    },
     tokenSignIn: function(token, next, error) {
-        firebase.auth().signInWithCustomToken(token).catch(error);
+        firebase.auth().signInWithCustomToken(token).then(next).catch(error);
     },
     tokenSignOut: function(next, error) {
         firebase.auth().signOut().then(next).catch(error);
