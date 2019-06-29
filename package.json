@@ -1,5 +1,8 @@
 {
   "name": "similar-web-twitter-authenticator",
+  "scripts": {
+    "start": "node app/server.js"
+  },
   "version": "1.0.0",
   "main": "index.js",
   "repository": "https://github.com/MrJellyB/similar-web-twitter-authenticator.git",

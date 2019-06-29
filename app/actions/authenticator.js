@@ -42,7 +42,11 @@ exports.signInWithToken = function(token, success, error) {
 };
 
 exports.getUserInfo = function(userId, success, error) {
-    fireBaseIndex.getUserFromUid(userId, success, error);
+    fireBaseIndex.getUserFromUid(userId, function(userData) {
+        const {uid,displayName,email} = userData;
+
+        return success({userId: uid, email: email, displayName: displayName});
+    }, error);
 }
 
 exports.getUserToken = function(userId, success, error) {
