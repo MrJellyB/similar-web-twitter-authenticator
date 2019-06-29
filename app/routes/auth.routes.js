@@ -30,7 +30,10 @@ router.post('/login', function(req,res,next) {
             authenticator.getUserToken(
                 userCredentials.user.uid, 
                 function(credentials) {
-                    res.set('token', credentials.token).status(200).send(userCredentials.user);
+                    debugger;
+                    const {uid,displayName,email} = userCredentials.user;
+
+                    res.set('token', credentials.token).status(200).send({userId: uid, email: email, displayName: displayName});
                     next();
                 },
                 next);
