@@ -28,7 +28,7 @@ app.use('/auth', authRouter);
 app.use('/info', tokenValidation(), tokenHeaderInjection(), infoRouter);
 
 
-var port = process.env.SERVICE_PORT || '8080';
+var port = process.env.PORT || '8080';
 app.set('port', port);
 var server = http.createServer(app);
 server.listen(port);
