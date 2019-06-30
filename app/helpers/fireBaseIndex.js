@@ -23,7 +23,7 @@ firebase.initializeApp({
   })
 
 module.exports = {
-    checkIfUserExists: function(userEmail, next, error) {
+    checkIfUserExists: function(userEmail, next, fail) {
         // let userData = await admin.auth().getUserByEmail(userEmail);
         // return (!!userData);
 
@@ -36,7 +36,7 @@ module.exports = {
                 if (error.code === "auth/user-not-found")
                     next(false);
                 else
-                    error();
+                    fail(error);
             });
     },
     addNewUser: function({email, firstName, lastName, password}, next, error) {
